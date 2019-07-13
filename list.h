@@ -17,7 +17,8 @@ extern "C" {
 #include <stdlib.h>
 
 
-#define LIST_MAX	32
+// length of the list
+#define LIST_MAX	5
 
 
 #ifndef LIST_MALLOC

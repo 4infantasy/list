@@ -142,12 +142,95 @@ ListHeadPop(list_t *list)
 // New a node.
 //
 list_node_t *
+ListNodeNew(char *str)
+{
+
+	list_node_t *node;
+
+	node = LIST_MALLOC(sizeof(list_node_t));
+
+	if ( node == NULL )
+		return NULL;
+
+	node->next = NULL;
+
+	node->val = str;
+
+	return node;
+}
+
+
+//
+// List loop add node.
+//
+list_node_t *
+ListLoopAddNode(list_t *list, list_node_t *node)
+{
+
+	if ( list == NULL || node == NULL )
+		return NULL;
+
+	if ( list->len < LIST_MAX ) {
+
+		ListTailPush(list, node);
+
+	} else {
+
+		list_node_t *head;
+
+		head = ListHeadPop(list);
+
+		//LIST_FREE(head->val);
+		head->next = NULL;
+		LIST_FREE(head);
+
+		ListTailPush(list, node);
+	}
+
+}
 
 
 
 int main(int argc, char const *argv[])
 {
-	printf("list test.\n");
+
+	list_t * list = ListCreate();
+
+	ListLoopAddNode(list, ListNodeNew("abc1"));
+
+	ListLoopAddNode(list, ListNodeNew("def2"));
+
+	ListLoopAddNode(list, ListNodeNew("abc3"));
+
+	ListLoopAddNode(list, ListNodeNew("def4"));
+
+	ListLoopAddNode(list, ListNodeNew("abc5"));
+
+	ListLoopAddNode(list, ListNodeNew("sss6"));
+
+	ListLoopAddNode(list, ListNodeNew("fff7"));
+
+	ListPrint(list);
+
+	list_node_t *node = ListHeadPop(list);
+
+	printf("pop a node : val=%s\n", (char *)node->val);
+
+	LIST_FREE(node);
+
+	ListPrint(list);
+
+	printf("push a new node : val=ggg8\n");
+
+	ListLoopAddNode(list, ListNodeNew("ggg8"));
+
+	ListPrint(list);
+
+	printf("push a new node : val=hhh9\n");
+
+	ListLoopAddNode(list, ListNodeNew("hhh9"));
+
+	ListPrint(list);
 
 	return 0;
 }
