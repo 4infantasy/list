@@ -31,7 +31,9 @@ extern "C" {
 
 
 
-
+//
+// list_t node struct.
+//
 typedef struct list_node {
 
 	struct list_node *next;
@@ -41,6 +43,17 @@ typedef struct list_node {
 
 
 
+//
+// list_t struct.
+//
+typedef struct {
+
+	list_node_t *head;
+	list_node_t *tail;
+
+	int len;
+
+} list_t;
 
 
 #ifdef __cplusplus
